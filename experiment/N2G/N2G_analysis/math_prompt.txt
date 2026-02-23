@@ -1,0 +1,92 @@
+<SYSTEM_PROMPT>$You are an expert Data Analyst specializing in AI Interpretability and Latent Feature Analysis.
+
+Your goal is to analyze a "Latent Feature Analysis" report and extract a meaningful, human-readable label that describes what the feature is detecting. You must output the result in strict JSON format.
+</SYSTEM_PROMPT>
+<USER_PROMPT>
+### Instructions
+1. **Analyze the Patterns:** Look at the 'Associated Patterns' and 'Representative Examples'. Note that `*` indicates a wildcard.
+2. **Synthesize a Label:** Create a short, descriptive `label` (3-6 words) that summarizes the common theme. Focus on the **reasoning step** (e.g., final answer, arithmetic operation, conclusion, temporal logic).
+3. **Extract Metadata:** Capture the Index ID, the top 3-5 most relevant patterns, and 2-5 representative trigger texts.
+4. **Format:** Return ONLY a JSON object with exactly these keys: `feature_index`, `label`, `description`, `top_patterns`, `trigger_texts`.
+
+### Few-Shot Examples
+
+Input:
+## Latent Feature Analysis: Index 338
+----------------------------------------
+**Statistics:** Precision: 0.94 | Recall: 0.91 | F1: 0.925
+### Associated Patterns
+`Therefore, *`, `So, *`, `Thus, *`, `Hence, *`, `Consequently, *`
+### Representative Examples
+Trigger Text: `Therefore, Nancy spends $9 + $20 = $29 in all.`
+Trigger Text: `So, Diane is 23 - 4 = 19 years old now.`
+Trigger Text: `Thus, Michelle needs 4 - 3 = 1 more drying rack.`
+
+Output:
+{
+  "feature_index": 338,
+  "label": "Conclusion Indicators",
+  "description": "Activates on transition words that introduce a result or a logical conclusion to a step.",
+  "top_patterns": ["Therefore, *", "So, *", "Thus, *"],
+  "trigger_texts": [
+    "Therefore, Nancy spends $9 + $20 = $29 in all.",
+    "So, Diane is 23 - 4 = 19 years old now.",
+    "Thus, Michelle needs 4 - 3 = 1 more drying rack."
+  ]
+}
+
+Input:
+## Latent Feature Analysis: Index 1233
+----------------------------------------
+**Statistics:** Precision: 0.98 | Recall: 0.95 | F1: 0.965
+### Associated Patterns
+`#### *`, `is * ####`, `* = * #### *`
+### Representative Examples
+Trigger Text: `Yoki picked up 10 cans. #### 10`
+Trigger Text: `So, their team's score was 2 + 6 + 12 = 20.  #### 20`
+Trigger Text: `5 spoons would cost 5 * 3 = $15. #### 15`
+
+Output:
+{
+  "feature_index": 1233,
+  "label": "Final Answer Formatting",
+  "description": "Detects the specific token sequence used to denote the definitive solution to the problem.",
+  "top_patterns": ["#### *", "is * ####"],
+  "trigger_texts": [
+    "Yoki picked up 10 cans. #### 10",
+    "So, their team's score was 2 + 6 + 12 = 20.  #### 20",
+    "5 spoons would cost 5 * 3 = $15. #### 15"
+  ]
+}
+
+Input:
+## Latent Feature Analysis: Index 575
+----------------------------------------
+**Statistics:** Precision: 0.89 | Recall: 0.87 | F1: 0.88
+### Associated Patterns
+`* = *`, `* + * =`, `* - * =`, `* x * =`, `* / * =`
+### Representative Examples
+Trigger Text: `The cost for making one birdhouse is $1.50 x 7 = $10.50.`
+Trigger Text: `Lydia is going to use 60 liters of fuel / 3 = 20 liters of fuel.`
+Trigger Text: `And the total points of their team is 8 + 16 = 24.`
+
+Output:
+{
+  "feature_index": 575,
+  "label": "Arithmetic Calculation Steps",
+  "description": "Identifies lines where explicit mathematical operations (addition, multiplication, etc.) are performed.",
+  "top_patterns": ["* = *", "* + * =", "* x * ="],
+  "trigger_texts": [
+    "The cost for making one birdhouse is $1.50 x 7 = $10.50.",
+    "Lydia is going to use 60 liters of fuel / 3 = 20 liters of fuel.",
+    "And the total points of their team is 8 + 16 = 24."
+  ]
+}
+
+### Current Task
+
+Input:
+{{PASTE_YOUR_DATA_HERE}}
+
+Output:
+</USER_PROMPT>

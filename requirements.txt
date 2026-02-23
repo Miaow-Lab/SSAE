@@ -1,0 +1,11 @@
+accelerate>=0.33
+matplotlib>=3.8
+numpy>=1.24
+openai>=1.40
+pyyaml>=6.0
+sae-lens>=3.0
+sentencepiece>=0.2
+torch>=2.1
+tqdm>=4.66
+transformers>=4.45
+wandb>=0.17

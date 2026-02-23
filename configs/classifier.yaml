@@ -1,0 +1,132 @@
+global:
+  seed: 1337
+  device: cuda
+  num_workers: 4
+
+
+classifier_data:
+  init_name: Qwen/Qwen2.5-0.5B
+  checkpoint_name: null # required, ckpt name for the model to extract latents from
+  model_dir: null # required, directory containing checkpoint_name
+  input_file: data/gsm8k_385K_valid.json
+  output_file: classifier_data/gsm8k_385K_valid_classifier_data
+  batch_size: 32
+  sparsity_factor: 1
+  max_new_tokens: 256
+  temperature: 0
+  top_k: 200
+  top_p: 0.95
+
+
+combine_label:
+  npz_file: classifier_data/gsm8k_385K_valid_classifier_data.npz
+  llm_response_file: null # required, path to LLM response jsonl
+  output_file: classifier_data/gsm8k_385K_valid_classifier_data_labeled.npz
+  response_key: response
+
+
+classifier_train:
+  init_name: Qwen/Qwen2.5-0.5B
+  out_dir: out_classifier/default_run
+  inputs: Tr # Tr or hints
+  task: len # len/token/correctness/logicality
+  train_file: null # the .npz file
+  val_file: null # the .npz file
+  n_inputs: 896 # the hidden_size of the model
+  hidden_dim: 1024 # hidden dim of the classifier
+  dropout: 0.1
+  learning_rate: 1.0e-6
+  min_lr: 1.0e-7
+  max_iters: 1000
+  batch_size: 128
+  warmup_iters: 2
+  lr_decay_iters: null
+  decay_lr: true
+  beta1: 0.9
+  beta2: 0.95
+  weight_decay: 0.01
+  grad_clip: 1.0
+  ddp_backend: nccl
+  grad_accum_steps: 4
+  torch_compile: false
+  always_save_checkpoint: false
+  eval_only: false
+  eval_interval: 1
+  log_interval: 1
+  wandb_log: true
+
+
+correctness_eval:
+  ckpt: null # ckpt of the classifier
+  data_file: null # the .npz file
+  batch_size: 128
+  task: null # correctness/logicality
+  inputs: null # Tr or hints
+  input_dim: 896 # the hidden_size of the model
+  hidden_dim: 1024 # hidden dim of the classifier
+  dropout: 0.1
+  threshold: 0.5
+  num_workers: 4
+  device: cuda
+
+
+statistic_baseline:
+  train_npz: null
+  val_npz: null
+  show_logicality: false
+
+
+token_sae_data:
+  init_name: Qwen/Qwen2.5-0.5B
+  sae_path: null # required
+  input_file: data/gsm8k_385K_valid.json # required
+  output_file: token_sae/baseline_data/gsm8k_valid_baseline # required, no .npz suffix
+  batch_size: 8
+  max_new_tokens: 256
+  use_numina_dataloader: false
+  task: null # optional, auto-infer from input_file when null
+
+
+token_sae_train:
+  init_name: Qwen/Qwen2.5-0.5B
+  out_dir: out_classifier/token_sae
+  inputs: sae_acts # layer_acts or sae_acts
+  task: correctness # len/token/correctness/logicality
+  train_file: null # required .npz
+  val_file: null # required .npz
+  n_inputs: null # required, layer_acts->896, sae_acts->14336
+  hidden_dim: 1024
+  dropout: 0.1
+  learning_rate: 1.0e-6
+  min_lr: 1.0e-7
+  max_iters: 300
+  batch_size: 128
+  warmup_iters: 2
+  lr_decay_iters: null
+  decay_lr: true
+  beta1: 0.9
+  beta2: 0.95
+  weight_decay: 0.01
+  grad_clip: 1.0
+  ddp_backend: nccl
+  grad_accum_steps: 8
+  torch_compile: false
+  always_save_checkpoint: false
+  eval_only: false
+  eval_interval: 1
+  log_interval: 1
+  wandb_log: true
+
+
+token_sae_eval:
+  ckpt: null # required, ckpt of the classifier
+  data_file: null # required .npz
+  batch_size: 128
+  task: null # correctness/logicality
+  inputs: null # layer_acts/sae_acts
+  input_dim: null
+  hidden_dim: 1024
+  dropout: 0.1
+  threshold: 0.5
+  num_workers: 4
+  device: cuda

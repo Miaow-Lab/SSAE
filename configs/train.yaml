@@ -1,0 +1,41 @@
+LOG_INTERVAL: 1
+ALWAYS_SAVE_CHECKPOINT: true
+EVAL_ONLY: false
+
+TASK: gsm8k-385k # gsm8k-385k or numina-859k
+TRAIN_DATA_PATH: data/gsm8k_385K_train.json
+VAL_DATA_PATH: data/gsm8k_385K_valid.json
+
+N_INPUTS: 896 # the hidden_size of the model
+SPARSITY_FACTOR: 1 # tau_spar
+L1_WEIGHT: 1.0e-4
+L1_TARGET: 3.0
+PHASE: 1
+
+ENCODER_INIT: Qwen/Qwen2.5-0.5B
+DECODER_INIT: Qwen/Qwen2.5-0.5B
+
+MAX_ITERS: 30
+EVAL_INTERVAL: 1
+BATCH_SIZE: 16
+WARMUP_ITERS: 2
+
+LEARNING_RATE: 1.0e-6
+MIN_LR: 1.0e-7
+LR_DECAY_ITERS: 30
+DECAY_LR: true
+
+BETA1: 0.9
+BETA2: 0.95
+WEIGHT_DECAY: 0.01
+GRAD_CLIP: 1.0
+GRAD_ACCUM_STEPS: 8
+
+DDP_BACKEND: nccl
+DEVICE: cuda
+TORCH_COMPILE: false
+
+WANDB_LOG: true
+
+CONTINUE_TRAIN: false
+RESUME_CKPT_NAME: null # required only when continue training is needed

@@ -1,0 +1,64 @@
+<SYSTEM_PROMPT>$You are an expert Data Analyst specializing in AI Interpretability and Latent Feature Analysis.
+
+Your goal is to analyze a "Latent Feature Analysis" report and extract a meaningful, human-readable label that describes what the feature is detecting. You must output the result in strict JSON format.
+</SYSTEM_PROMPT>
+<USER_PROMPT>
+### Instructions
+1. **Analyze the Patterns:** Look at the 'Associated Patterns' and 'Representative Examples'. Note that `*` indicates a wildcard.
+2. **Synthesize a Label:** Create a short, descriptive `label` (3-6 words) that summarizes the common theme. Focus on the **algorithmic intent or logical reasoning** (e.g., recursive base case, input validation logic).
+3. **Extract Metadata:** Capture the Index ID, the top 3-5 most relevant patterns, and 2-5 representative trigger texts.
+4. **Format:** Return ONLY a JSON object with exactly these keys: `feature_index`, `label`, `description`, `top_patterns`, `trigger_texts`.
+
+### Few-Shot Examples
+
+Input:
+## Latent Feature Analysis: Index 405
+----------------------------------------
+**Statistics:** Precision: 0.95 | Recall: 0.92 | F1: 0.935
+### Associated Patterns
+`# *`, `// *`, `/* *`, `""" *`, `''' *`, `TODO *`, `FIXME *`
+### Representative Examples
+Trigger Text: `# This function calculates the variance using Welford's algorithm`
+Trigger Text: `// FIXME: Handle potential integer overflow here`
+
+Output:
+{
+  "feature_index": 405,
+  "label": "Algorithmic Documentation and Task Planning",
+  "description": "Captures developer intent regarding code logic explanations and markers for future technical debt or fixes.",
+  "top_patterns": ["# *", "// *", "TODO *"],
+  "trigger_texts": [
+    "# This function calculates the variance using Welford's algorithm",
+    "// FIXME: Handle potential integer overflow here"
+  ]
+}
+
+Input:
+## Latent Feature Analysis: Index 102
+----------------------------------------
+**Statistics:** Precision: 0.92 | Recall: 0.88 | F1: 0.90
+### Associated Patterns
+`if * is None:`, `if len(*) == 0:`, `try:`, `catch *`, `except Exception:`
+### Representative Examples
+Trigger Text: `if user_input is None: return default_value`
+Trigger Text: `try: result = x / y; except ZeroDivisionError:`
+
+Output:
+{
+  "feature_index": 102,
+  "label": "Defensive Programming and Error Handling",
+  "description": "Detects logic used to validate null/empty states or manage runtime exceptions to prevent crashes.",
+  "top_patterns": ["if * is None:", "try:", "except *"],
+  "trigger_texts": [
+    "if user_input is None: return default_value",
+    "try: result = x / y; except ZeroDivisionError:"
+  ]
+}
+
+### Current Task
+
+Input:
+{{PASTE_YOUR_DATA_HERE}}
+
+Output:
+</USER_PROMPT>
