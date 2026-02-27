@@ -1,6 +1,14 @@
-# SSAE Repository
+<div align="center">
 
-This repository contains training and experiment code for SSAE and downstream analyses.
+# Step-Level Sparse Autoencoder for Reasoning Process Interpretation
+
+[![arXiv](https://img.shields.io/badge/arXiv-2403.00211-b31b1b.svg)](https://arxiv.org/abs/2503.00211)
+[![datasets](https://img.shields.io/badge/datasets-FFD21E?logo=huggingface&logoColor=white)](https://huggingface.co/datasets/Miaow-Lab/SSAE-Dataset)
+[![model](https://img.shields.io/badge/model-blue?logo=huggingface&logoColor=white)](https://huggingface.co/Miaow-Lab/SSAE-Checkpoints)
+
+</div>
+
+This repository contains the official implementation of the paper "Step-Level Sparse Autoencoder for Reasoning Process Interpretation"
 
 ## 🔧 Installation
 ### Prerequisites
@@ -22,11 +30,7 @@ pip install -r requirements.txt
 
 ### Dataset
 
-The dataset is hosted on Hugging Face:
-
-- Dataset link: https://huggingface.co/datasets/<YOUR_DATASET_NAME>
-
-There should be 6 files to download: `gsm8k_385K_train.json`, `gsm8k_385K_valid.json`, `numina_859K_train.json`, `numina_859K_valid.jsonl`, `opencodeinstruct_train.jsonl`, and `opencodeinstruct_valid.jsonl`.
+The dataset is hosted on [HuggingFace Dataset](https://huggingface.co/Miaow-Lab/SSAE-Checkpoints). There should be 6 files to download: `gsm8k_385K_train.json`, `gsm8k_385K_valid.json`, `numina_859K_train.json`, `numina_859K_valid.json`, `opencodeinstruct_36K_train.json`, and `opencodeinstruct_36K_valid.json`.
 
 Please create a `data/` folder at the repository root and place all downloaded files there.
 
@@ -36,11 +40,22 @@ mkdir -p data
 ```
 
 ### Pretrained SSAE Checkpoints
-We provide pretrained SSAE checkpoints on Hugging Face:
-- **GSM8K Dataset**: https://huggingface.co/<YOUR_CKPT_REPO>
-- **Numina Dataset**: https://huggingface.co/<YOUR_CKPT_REPO>
-- **OpenCodeInstruct Dataset**: https://huggingface.co/<YOUR_CKPT_REPO>
+We also provide pretrained SSAE checkpoints on [HuggingFace](https://huggingface.co/Miaow-Lab/SSAE-Checkpoints).
 
+## ⚙️ Configuration
+
+The project uses modular YAML configuration files located in `configs/`. You can modify parameters directly in the YAML files or override them via command line arguments.
+
+### Global Config Structure
+There are 3 main configuration files:
+
+- **`configs/train.yaml`**: Main configuration for training SSAE models.
+
+- **`configs/classifier.yaml`**: Configuration for the classifier pipeline (data generation, training, evaluation).
+
+- **`configs/experiment.yaml`**: Configuration for analysis and probing experiments.
+
+All scripts support overriding config parameters using the `--set KEY=VALUE` argument without modifying the YAML file.
 
 ## 🧰 Usage
 ### 1. Training SSAE
@@ -55,7 +70,7 @@ bash scripts/train_single.sh configs/train.yaml
 Multi-GPU training (DDP):
 
 ```bash
-NPROC_PER_NODE=your_gpu_node bash scripts/train_ddp.sh configs/train.yaml
+NPROC_PER_NODE=<num_gpus> bash scripts/train_ddp.sh configs/train.yaml
 ```
 
 If you use the provided checkpoints, please place them in your configured `model_dir`.
@@ -89,10 +104,6 @@ Run probing experiment:
 ```bash
 bash scripts/run_probing.sh configs/experiment.yaml
 ```
-
----
-
-All experiment/training scripts support config overrides via `--set KEY=VALUE`.
 
 ## 📧 Contact
 For questions or feedback, please contact [Xuan Yang](mailto:xyang753-c@my.cityu.edu.hk)

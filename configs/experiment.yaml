@@ -5,8 +5,8 @@ global:
 
 n2g:
   init_name: Qwen/Qwen2.5-0.5B
-  checkpoint_name: ckpt_20260117_130156_ddp_gsm8k-385k_qwen2.5-0.5b_dwa_L1_target_3.0_phase_1_mask_token_0.1_global_step_49539.pt # required, ckpt name for the model to extract latents from
-  model_dir: out_gsm8k-385k/dwa_3.0 # required, directory containing checkpoint_name
+  checkpoint_name: null # required, ckpt name for the model to extract latents from
+  model_dir: null # required, directory containing checkpoint_name
   dataset: gsm8k # gsm8k/numina/opencodeinstruct
   input_file: data/gsm8k_385K_train.json
   eval_file: data/gsm8k_385K_valid.json
@@ -24,9 +24,9 @@ n2g:
 probing_exp:
   init_name: Qwen/Qwen2.5-0.5B
   input_file: data/gsm8k_385K_valid.json # required, gsm8k/svamp/multiarith
-  checkpoint_name: ckpt_20260113_231501_ddp_gsm8k-385k_qwen2.5-0.5b_dwa_L1_target_10.0_phase_1_mask_token_0.1_global_step_56612.pt # required, ckpt name for the model to extract latents from
-  model_dir: out_gsm8k-385k/dwa_10.0 # required, directory containing checkpoint_name
-  classifier_ckpt_path: out_classifier/ckpt_20260113_231501_ddp_gsm8k-385k_qwen2.5-0.5b_dwa_L1_target_10.0_phase_1_mask_token_0.1_global_step_56612.pt/ckpt_20260118_130132_ddp__Tr_correctness_hidden_dim_1024_dropout_0.1.pt # required, classifier checkpoint path used in probe-guided stage
+  checkpoint_name: null # required, ckpt name for the model to extract latents from
+  model_dir: null # required, directory containing checkpoint_name
+  classifier_ckpt_path: null # required, classifier checkpoint path used in probe-guided stage
   task: correctness # optional, defaults to basename of input_file. (len/token/correctness/logicality)
   sparsity_factor: 1
   max_new_tokens: 256
