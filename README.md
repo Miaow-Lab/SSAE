@@ -17,7 +17,7 @@ This repository contains the official implementation of the paper "Step-Level Sp
 
 ```bash
 # Clone the repository
-git clone xxx.git
+git clone https://github.com/Miaow-Lab/SSAE.git
 cd SSAE
 
 # Create conda environment
