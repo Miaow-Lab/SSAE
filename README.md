@@ -2,7 +2,7 @@
 
 # Step-Level Sparse Autoencoder for Reasoning Process Interpretation
 
-[![arXiv](https://img.shields.io/badge/arXiv-2403.00211-b31b1b.svg)](https://arxiv.org/abs/2503.00211)
+[![arXiv](https://img.shields.io/badge/arXiv-2603.03031-b31b1b.svg)](https://arxiv.org/abs/2603.03031)
 [![datasets](https://img.shields.io/badge/datasets-FFD21E?logo=huggingface&logoColor=white)](https://huggingface.co/datasets/Miaow-Lab/SSAE-Dataset)
 [![model](https://img.shields.io/badge/model-blue?logo=huggingface&logoColor=white)](https://huggingface.co/Miaow-Lab/SSAE-Checkpoints)
 
@@ -111,7 +111,15 @@ For questions or feedback, please contact [Xuan Yang](mailto:xyang753-c@my.cityu
 ## 🖊 Citation
 If you find this work helpful, please cite our paper:
 ```bibtex
-
+@misc{yang2026steplevelsparseautoencoderreasoning,
+      title={Step-Level Sparse Autoencoder for Reasoning Process Interpretation}, 
+      author={Xuan Yang and Jiayu Liu and Yuhang Lai and Hao Xu and Zhenya Huang and Ning Miao},
+      year={2026},
+      eprint={2603.03031},
+      archivePrefix={arXiv},
+      primaryClass={cs.LG},
+      url={https://arxiv.org/abs/2603.03031}, 
+}
 ```
 
 
